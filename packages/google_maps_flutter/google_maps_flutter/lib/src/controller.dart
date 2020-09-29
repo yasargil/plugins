@@ -168,6 +168,22 @@ class GoogleMapController {
     return _googleMapsFlutterPlatform.moveCamera(cameraUpdate, mapId: mapId);
   }
 
+  /// Allow modifing padding
+  Future<void> setPadding(EdgeInsets padding) {
+    final Map<String, dynamic> optionsMap = <String, dynamic>{};
+    if (padding != null) {
+      optionsMap['padding'] = [
+        padding?.top,
+        padding?.left,
+        padding?.bottom,
+        padding?.right,
+      ];
+      return _googleMapsFlutterPlatform.updateMapOptions(optionsMap,
+          mapId: mapId);
+    }
+    return Future.value(null);
+  }
+
   /// Sets the styling of the base map.
   ///
   /// Set to `null` to clear any previous custom styling.

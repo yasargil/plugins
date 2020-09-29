@@ -27,7 +27,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   private Object initialPolygons;
   private Object initialPolylines;
   private Object initialCircles;
-  private Rect padding = new Rect(0, 0, 0, 0);
+  private Rect padding;
 
   GoogleMapController build(
       int id,
@@ -60,7 +60,9 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
     controller.setInitialPolygons(initialPolygons);
     controller.setInitialPolylines(initialPolylines);
     controller.setInitialCircles(initialCircles);
-    controller.setPadding(padding.top, padding.left, padding.bottom, padding.right);
+    if (padding != null) {
+      controller.setPadding(padding.top, padding.left, padding.bottom, padding.right);
+    }
     return controller;
   }
 
