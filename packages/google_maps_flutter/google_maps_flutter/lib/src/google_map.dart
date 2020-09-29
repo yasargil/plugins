@@ -54,6 +54,7 @@ class GoogleMap extends StatefulWidget {
     this.onCameraIdle,
     this.onTap,
     this.onLongPress,
+    this.mapStyleAsset,
   })  : assert(initialCameraPosition != null),
         super(key: key);
 
@@ -204,6 +205,9 @@ class GoogleMap extends StatefulWidget {
   /// When this set is empty or null, the map will only handle pointer events for gestures that
   /// were not claimed by any other gesture recognizer.
   final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
+
+  /// Which map style should be loaded from asset file.
+  final String mapStyleAsset;
 
   /// Creates a [State] for this [GoogleMap].
   @override
@@ -402,6 +406,7 @@ class _GoogleMapOptions {
     this.indoorViewEnabled,
     this.trafficEnabled,
     this.buildingsEnabled,
+    this.mapStyleAsset,
   }) {
     assert(liteModeEnabled == null ||
         !liteModeEnabled ||
@@ -428,6 +433,7 @@ class _GoogleMapOptions {
       indoorViewEnabled: map.indoorViewEnabled,
       trafficEnabled: map.trafficEnabled,
       buildingsEnabled: map.buildingsEnabled,
+      mapStyleAsset: map.mapStyleAsset,
     );
   }
 
@@ -467,6 +473,8 @@ class _GoogleMapOptions {
 
   final bool buildingsEnabled;
 
+  final String mapStyleAsset;
+
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> optionsMap = <String, dynamic>{};
 
@@ -501,6 +509,8 @@ class _GoogleMapOptions {
     addIfNonNull('indoorEnabled', indoorViewEnabled);
     addIfNonNull('trafficEnabled', trafficEnabled);
     addIfNonNull('buildingsEnabled', buildingsEnabled);
+    addIfNonNull('mapStyleAsset', mapStyleAsset);
+
     return optionsMap;
   }
 

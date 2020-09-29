@@ -28,6 +28,8 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   private Object initialPolylines;
   private Object initialCircles;
   private Rect padding;
+  private Object mapStyleAsset;
+
 
   GoogleMapController build(
       int id,
@@ -63,6 +65,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
     if (padding != null) {
       controller.setPadding(padding.top, padding.left, padding.bottom, padding.right);
     }
+    controller.setMapStyleAsset(mapStyleAsset);
     return controller;
   }
 
@@ -183,5 +186,10 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   @Override
   public void setInitialCircles(Object initialCircles) {
     this.initialCircles = initialCircles;
+  }
+
+  @Override
+  public void setMapStyleAsset(Object mapStyleAsset) {
+    this.mapStyleAsset = mapStyleAsset;
   }
 }

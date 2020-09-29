@@ -68,6 +68,7 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
     _mapView = [GMSMapView mapWithFrame:frame camera:camera];
     _mapView.accessibilityElementsHidden = NO;
     _trackCameraPosition = NO;
+    _registrar = registrar;
     InterpretMapOptions(args[@"options"], self);
     NSString* channelName =
         [NSString stringWithFormat:@"plugins.flutter.io/google_maps_%lld", viewId];
@@ -80,7 +81,6 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
       }
     }];
     _mapView.delegate = weakSelf;
-    _registrar = registrar;
     _cameraDidInitialSetup = NO;
     _markersController = [[FLTMarkersController alloc] init:_channel
                                                     mapView:_mapView
@@ -453,6 +453,29 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
   }
 }
 
+- (NSString*)setMapStyleAsset:(NSString*)assetName {
+
+  if (assetName == (id)[NSNull null] || assetName.length == 0) {
+    _mapView.mapStyle = nil;
+    return nil;
+  }
+  NSString *asset =  [_registrar lookupKeyForAsset:assetName];
+    NSLog(@"setMapStyleAsset %@ -- %@ -- %@", assetName, asset, _registrar);
+
+  NSURL* fileUrl = [[NSBundle mainBundle] URLForResource:asset withExtension:nil];
+  if (!fileUrl) {
+    return nil;
+  }
+  NSError* error;
+  GMSMapStyle* style = [GMSMapStyle styleWithContentsOfFileURL:fileUrl error:&error];
+  if (!style) {
+    return [error localizedDescription];
+  } else {
+    _mapView.mapStyle = style;
+    return nil;
+  }
+}
+
 #pragma mark - GMSMapViewDelegate methods
 
 - (void)mapView:(GMSMapView*)mapView willMove:(BOOL)gesture {
@@ -677,5 +700,9 @@ static void InterpretMapOptions(NSDictionary* data, id<FLTGoogleMapOptionsSink> 
   NSNumber* myLocationButtonEnabled = data[@"myLocationButtonEnabled"];
   if (myLocationButtonEnabled != nil) {
     [sink setMyLocationButtonEnabled:ToBool(myLocationButtonEnabled)];
+  }
+  id mapStyleAsset = data[@"mapStyleAsset"];
+  if (mapStyleAsset) {
+    [sink setMapStyleAsset:mapStyleAsset];
   }
 }

@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setMyLocationEnabled:(BOOL)enabled;
 - (void)setMyLocationButtonEnabled:(BOOL)enabled;
 - (nullable NSString *)setMapStyle:(NSString *)mapStyle;
+- (nullable NSString *)setMapStyleAsset:(NSString *)mapStyleUrl;
+
 @end
 
 // Defines map overlay controllable from Flutter.
