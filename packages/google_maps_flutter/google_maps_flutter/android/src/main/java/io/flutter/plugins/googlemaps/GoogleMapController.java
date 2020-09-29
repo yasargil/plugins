@@ -47,7 +47,12 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.platform.PlatformView;
+import io.flutter.view.FlutterMain;
+
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -98,6 +103,7 @@ final class GoogleMapController
   private List<Object> initialPolygons;
   private List<Object> initialPolylines;
   private List<Object> initialCircles;
+  private String mapStyleAsset;
 
   GoogleMapController(
       int id,
@@ -199,6 +205,7 @@ final class GoogleMapController
     }
     setGoogleMapListener(this);
     updateMyLocationSettings();
+    updateMapStyleAsset();
     markersController.setGoogleMap(googleMap);
     polygonsController.setGoogleMap(googleMap);
     polylinesController.setGoogleMap(googleMap);
@@ -749,6 +756,39 @@ final class GoogleMapController
           (int) (top * density),
           (int) (right * density),
           (int) (bottom * density));
+    }
+  }
+
+  @Override
+  public void setMapStyleAsset(Object mapStyleAsset) {
+
+    this.mapStyleAsset = (String)mapStyleAsset;
+    if (googleMap != null) {
+      updateMapStyleAsset();
+    }
+
+  }
+
+  public void updateMapStyleAsset() {
+    if (mapStyleAsset == null) {
+      googleMap.setMapStyle(null);
+    } else {
+      try {
+        String filePath = FlutterMain.getLookupKeyForAsset((String)mapStyleAsset);
+        StringBuilder sb = new StringBuilder();
+        InputStream is = context.getAssets().open(filePath);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String str;
+        while ((str = br.readLine()) != null) {
+          sb.append(str);
+        }
+        br.close();
+        googleMap.setMapStyle(new MapStyleOptions(sb.toString()));
+
+      } catch (Exception e) {
+        googleMap.setMapStyle(null);
+      }
+
     }
   }
 

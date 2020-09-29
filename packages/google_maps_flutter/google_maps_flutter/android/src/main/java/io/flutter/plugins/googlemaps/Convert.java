@@ -344,6 +344,10 @@ class Convert {
     if (buildingsEnabled != null) {
       sink.setBuildingsEnabled(toBoolean(buildingsEnabled));
     }
+    final Object mapStyleAsset = data.get("mapStyleAsset");
+    if (mapStyleAsset != null) {
+      sink.setMapStyleAsset(mapStyleAsset);
+    }
   }
 
   /** Returns the dartMarkerId of the interpreted marker. */
