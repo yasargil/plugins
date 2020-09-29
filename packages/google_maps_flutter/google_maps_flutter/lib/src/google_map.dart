@@ -498,12 +498,14 @@ class _GoogleMapOptions {
     addIfNonNull('trackCameraPosition', trackCameraPosition);
     addIfNonNull('myLocationEnabled', myLocationEnabled);
     addIfNonNull('myLocationButtonEnabled', myLocationButtonEnabled);
-    addIfNonNull('padding', <double>[
-      padding?.top,
-      padding?.left,
-      padding?.bottom,
-      padding?.right,
-    ]);
+    if (padding != null) {
+      addIfNonNull('padding', <double>[
+        padding?.top,
+        padding?.left,
+        padding?.bottom,
+        padding?.right,
+      ]);
+    }
     addIfNonNull('indoorEnabled', indoorViewEnabled);
     addIfNonNull('trafficEnabled', trafficEnabled);
     addIfNonNull('buildingsEnabled', buildingsEnabled);
