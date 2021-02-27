@@ -10,6 +10,8 @@ import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLngBounds;
 import io.flutter.plugin.common.BinaryMessenger;
+import java.util.List;
+import java.util.Map;
 
 class GoogleMapBuilder implements GoogleMapOptionsSink {
   private final GoogleMapOptions options = new GoogleMapOptions();
@@ -25,7 +27,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   private Object initialCircles;
   private Rect padding;
   private Object mapStyleAsset;
-
+  private List<Map<String, ?>> initialTileOverlays;
 
   GoogleMapController build(
       int id,
@@ -49,6 +51,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
       controller.setPadding(padding.top, padding.left, padding.bottom, padding.right);
     }
     controller.setMapStyleAsset(mapStyleAsset);
+    controller.setInitialTileOverlays(initialTileOverlays);
     return controller;
   }
 
@@ -174,5 +177,9 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   @Override
   public void setMapStyleAsset(Object mapStyleAsset) {
     this.mapStyleAsset = mapStyleAsset;
+  }
+  
+  public void setInitialTileOverlays(List<Map<String, ?>> initialTileOverlays) {
+    this.initialTileOverlays = initialTileOverlays;
   }
 }
