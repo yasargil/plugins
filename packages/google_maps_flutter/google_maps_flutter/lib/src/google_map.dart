@@ -233,7 +233,7 @@ class GoogleMap extends StatefulWidget {
   final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
 
   /// Which map style should be loaded from asset file.
-  final String mapStyleAsset;
+  final String? mapStyleAsset;
 
   /// Creates a [State] for this [GoogleMap].
   @override
@@ -502,7 +502,7 @@ class _GoogleMapOptions {
 
   final bool myLocationButtonEnabled;
 
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   final bool indoorViewEnabled;
 
@@ -510,7 +510,7 @@ class _GoogleMapOptions {
 
   final bool buildingsEnabled;
 
-  final String mapStyleAsset;
+  final String? mapStyleAsset;
 
   Map<String, dynamic> toMap() {
 
@@ -529,13 +529,13 @@ class _GoogleMapOptions {
       'trackCameraPosition': trackCameraPosition,
       'myLocationEnabled': myLocationEnabled,
       'myLocationButtonEnabled': myLocationButtonEnabled,
-      if (padding != null) 
-      'padding': <double>[
-        padding.top,
-        padding.left,
-        padding.bottom,
-        padding.right,
-      ],
+      if (padding != null)  
+        'padding': <double>[
+          padding!.top,
+          padding!.left,
+          padding!.bottom,
+          padding!.right,
+        ],
       'indoorEnabled': indoorViewEnabled,
       'trafficEnabled': trafficEnabled,
       'buildingsEnabled': buildingsEnabled,

@@ -193,16 +193,16 @@ class GoogleMapController {
   }
 
   /// Allow modifing padding
-  Future<void> setPadding(EdgeInsets padding) {
+  Future<void> setPadding(EdgeInsets? padding) {
     final Map<String, dynamic> optionsMap = <String, dynamic>{};
     if (padding != null) {
       optionsMap['padding'] = [
-        padding?.top,
-        padding?.left,
-        padding?.bottom,
-        padding?.right,
+        padding.top,
+        padding.left,
+        padding.bottom,
+        padding.right,
       ];
-      return _googleMapsFlutterPlatform.updateMapOptions(optionsMap,
+      return GoogleMapsFlutterPlatform.instance.updateMapOptions(optionsMap,
           mapId: mapId);
     }
     return Future.value(null);
