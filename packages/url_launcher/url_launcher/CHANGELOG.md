@@ -1,6 +1,15 @@
+## 6.0.5
+
+* Add iOS unit and UI integration test targets.
+* Add a `Link` widget to the example app.
+
+## 6.0.4
+
+* Migrate maven repository from jcenter to mavenCentral.
+
 ## 6.0.3
 
-* Updat README notes about URL schemes on iOS
+* Update README notes about URL schemes on iOS
 
 ## 6.0.2
 
